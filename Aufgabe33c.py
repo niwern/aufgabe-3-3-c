@@ -1,30 +1,27 @@
 import math
 import csv
 
-h = 1.6	# in Metern
-v = 10 	# in Metern pro Sekunde
-g = 9.81	# in Metern pro Sekunde im Quadrat
-winkel = []	# Liste mit Winkeln
-sx = []	# Liste mit Reichweiten
-dStats = [] # Genauigkeit
+h = 1.6	# Anfangshoehe in Metern
+v = 10 	# Anfangsgeschwindigkeit in Metern pro Sekunde
+g = 9.81	# Erdbeschleunigung in Metern pro Sekunde im Quadrat
+winkel = []	# Liste mit allen berechneten Winkeln
+sx = []		# Liste mit allen berechneten Reichweiten
+dStats = [] # Liste mit allen berechneten Genauigkeiten
 
 
-
+# gibt Betrag einer Zahl zurueck
 def abs(a):
 	if a < 0:
 		return -a
 	return a
 
+# gibt die hoehere von zwei Zahlen zurueck
 def getMax(a, b):
 	if a > b:
 		return a
 	return b	
 
-def frange(x, y, jump):
-    while x < y:
-    	winkel.appendx
-    	x += jump
-
+# Ausgabe des Maximalergebnisses
 def findMax(array):
 	max = array[0]
 	maxi = 0
@@ -34,33 +31,32 @@ def findMax(array):
 			maxi = i
 	print("Unter dem Winkel \n {0} Grad wurde die maximale Reichweite \n {1} erzielt.".format(winkel[maxi], max))
 
+# gibt Stelle Y fuer Wert X zurueck
 def calcSx(w):
 	w = math.radians(w)
 	s = math.cos(w) * v * (math.sin(w)*v/g + math.sqrt((math.sin(w)*v/g)**2 + 2*h/g))
 	return s
 
+# Ergebnisse in der Komandozeile ausgeben
 def printStats():
 	data1 = [winkel, sx, dStats]
 	print("\t".join(['Winkel', 'Reichweite', 'Toleranz']))
 	for i in range(len(winkel)):
     		print("\t".join([str(theValue[i]) for theValue in data1]))
 
+# Ergebnisse in ein File schreiben
 def printLog():
 	data1 = [winkel, sx, dStats]
-	with open("Output.csv", "w") as csvfile:
+	with open("Berechnungen.csv", "w") as csvfile:
 		fieldnames = ['Winkel', 'Reichweite', 'Toleranz']
 		writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
 		writer.writeheader()
 		for i in range(len(winkel)):
 			writer.writerow({'Winkel': winkel[i], 'Reichweite': sx[i], 'Toleranz': dStats[i]})
-			# text_file.writerow(";".join([str(theValue[i]) for theValue in data1]))
-		#text_file.close()
 
 
-#	for i in range(len(winkel)):
-#		print("Winkel - Reichweite - Toleranz : {0} - {1} - {2}".format(winkel[i], sx[i], dStats[i]))
-
+# Werteberechnung durch annaehern an den Maximalwert
 def getHightest(x1, d):
 	x2 = x1 - d
 	x3 = x1 + d
@@ -85,10 +81,10 @@ def getHightest(x1, d):
 	else:
 		getHightest(x3, d)
 
-# Ausrechnen fuer eine Liste 
+# Werteberehnung fuer eine Liste von Werten
 def calcForList():
-	x = 0	# Startwert
-	y = 90	# Stoppwert
+	x = 0		# Startwert
+	y = 90		# Stoppwert
 	jump = 0.001	# Praezision
 	while x < y:
 		winkel.append(x)
@@ -100,6 +96,7 @@ def calcForList():
 
 # start
 getHightest(0, 10.0)
+#calcForList()
 
 
 
