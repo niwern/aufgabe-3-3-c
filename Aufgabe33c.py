@@ -66,9 +66,9 @@ def getHightest(x1, d):
 	y3 = calcSx(x3)
 
 	# for the stats
-	winkel.append(math.radians(x1))
+	winkel.append(x1)
 	sx.append(y1)
-	dStats.append(math.radians(d))
+	dStats.append(d)
 
 	if d < 0.00001:
 		printStats()
